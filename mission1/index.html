@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="bullwoo-todo-list"></div>
+    <div id="idiots-todo-list"></div>
+
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+      ];
+
+      const newData = [
+        {
+          text: 'JS 계속 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 계속 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      const bullwooData = [
+        {
+          text: 'React Query 더 익히기',
+          isCompleted: true,
+        },
+        {
+          text: 'KDT 파이널프로젝트하기',
+          isCompleted: false,
+        },
+      ];
+
+      const idiotsData = [
+        {
+          text: '싱글발매 마무리',
+          isCompleted: false,
+        },
+        {
+          text: '합주일정 잡기',
+          isCompleted: true,
+        },
+      ];
+
+      function TodoList(todos) {
+        if (!new.target) {
+          throw new Error('error message');
+        }
+
+        this.render = function (divId) {
+          if (
+            Array.isArray(todos) &&
+            todos.every((todo) => 'text' in todo && todo.text.trim().length > 0)
+          ) {
+            document.querySelector(divId).innerHTML = todos
+              .map((todo) =>
+                todo.isCompleted == true
+                  ? `<s>${todo.text}</s> </br>`
+                  : `<div>${todo.text}</div>`
+              )
+              .join('');
+          } else {
+            throw new Error('error message');
+          }
+        };
+
+        this.setState = function (nextData, divId) {
+          if (
+            Array.isArray(nextData) &&
+            nextData.every(
+              (todo) => 'text' in todo && todo.text.trim().length > 0
+            )
+          ) {
+            document.querySelector(divId).innerHTML = nextData
+              .map((todo) =>
+                todo.isCompleted == true
+                  ? `<s>${todo.text}</s> </br>`
+                  : `<div>${todo.text}</div>`
+              )
+              .join('');
+          } else {
+            throw new Error('error message');
+          }
+        };
+      }
+
+      const todoList = new TodoList(data);
+      todoList.render('#todo-list');
+      todoList.setState(newData, '#todo-list');
+
+      const bullwooTodoList = new TodoList(bullwooData);
+      bullwooTodoList.render('#bullwoo-todo-list');
+
+      const idiotsTodoList = new TodoList(idiotsData);
+      idiotsTodoList.render('#idiots-todo-list');
+    </script>
+  </body>
+</html>
